@@ -50,3 +50,7 @@ else {
 	}
 }
 
+// Need to get it to stop and reset when guessesLeft gets to 0.
+// Only accept letters (no incorrect keystrokes from user).
+// When a win or loss occurs, restart the game (without refreshing the page).
+// Add a space after userChoiceArray elements in display.

@@ -1,17 +1,52 @@
 // Create array of possible letters.
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+// Initialize empty array of user choices.
+var userChoiceArray = [];
+
 // Create variables for wins, losses, guesses left.
+var wins = 0;
+var losses = 0;
+var guessesLeft = 10;
 
-// The app picks a letter at random.
+if (guessesLeft === 0){
+	document.write('Game Over');
+}
 
-// Ask the user to pick a letter.
+else {
 
-// Add the letter to guesses so far.
+	// The computer picks a letter at random.
+	var computerChoice = letters[Math.floor(Math.random() * letters.length)];
+	console.log('Computer choice: ' + computerChoice);
 
-// Compare the letters to see if they match.
+	// Ask the user to pick a letter.
+	document.onkeyup = function() {
+		
+		var userChoice = String.fromCharCode(event.keyCode).toLowerCase();
 
-// If they match, display 'You Win!' alert, increment wins, and start the game over.
+		// Compare the letters to see if they match.
+		if (userChoice === computerChoice){
+			wins++; // increment wins if they match
+		}
 
-// If they do not match, increment losses, decrement guesses left, and start the game over.
+		if (userChoice != computerChoice){
+			losses++; // increment losses if they do not match
+		}
+
+		// Add guess to user choice array.
+		userChoiceArray.push(userChoice);
+
+		guessesLeft--;
+		console.log(guessesLeft);
+
+		// Add the letter to guesses so far.
+		var guessesSoFar = "<p>Wins: " + wins + "</p>" +
+		"<p>Losses: " + losses + "</p>" +
+		"<p>Guesses Left: " + guessesLeft + "</p>" +
+		"<p>Your Guesses so far: " + userChoiceArray + "</p>";
+
+		document.querySelector('#game').innerHTML = guessesSoFar;
+
+	}
+}
 

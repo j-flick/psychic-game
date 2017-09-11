@@ -1,56 +1,120 @@
+//_VARIABLES__________________________________________________________________________
+
 // Create array of possible letters.
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 // Initialize empty array of user choices.
 var userChoiceArray = [];
 
-// Create variables for wins, losses, guesses left.
+// Initialize variables for wins, losses, guesses left, and computer choice.
 var wins = 0;
 var losses = 0;
 var guessesLeft = 10;
+var computerChoice = null;
 
-if (guessesLeft === 0){
-	document.write('Game Over');
+
+//_FUNCTIONS__________________________________________________________________________
+
+function updateWins() {
+	document.querySelector("#wins").innerHTML = "Wins: " + wins;
 }
 
-else {
+function updateLosses() {
+	document.querySelector("#losses").innerHTML = "Losses: " + losses;
+}
 
-	// The computer picks a letter at random.
-	var computerChoice = letters[Math.floor(Math.random() * letters.length)];
-	console.log('Computer choice: ' + computerChoice);
+function updateGuessesLeft() {
+	document.querySelector("#guessesLeft").innerHTML = "Guesses Left: " + guessesLeft;
+}
 
-	// Ask the user to pick a letter.
-	document.onkeyup = function() {
-		
-		var userChoice = String.fromCharCode(event.keyCode).toLowerCase();
+function updateUserChoiceArray() {
+	document.querySelector("#guesses").innerHTML = "Your Guesses so far: " + userChoiceArray;
+}
 
-		// Compare the letters to see if they match.
-		if (userChoice === computerChoice){
-			wins++; // increment wins if they match
+function generateComputerChoice() {
+	computerChoice = letters[Math.floor(Math.random() * letters.length)];
+	return computerChoice;
+}
+
+
+//_MAIN PROCESS_______________________________________________________________________
+
+// Call functions to start game.
+updateGuessesLeft();
+updateWins();
+updateLosses();
+
+
+// Computer chooses random letter.
+generateComputerChoice();
+console.log('Computer choice: ' + computerChoice);
+
+// When the user presses a key, run the following function...
+document.onkeyup = function(event) {
+
+	// Store user letter choice when key is pressed.
+	var userChoice = String.fromCharCode(event.keyCode).toLowerCase();
+	console.log('User choice: ' + userChoice);
+
+	// If the user's keystroke is in the letters array, run this code...
+	// Since -1 is returned if the value to search for in an array does not occur,
+	// not -1 means the user's keystroke must be in the letters array.
+	if (letters.indexOf(userChoice) !== -1){
+
+		// If the choices match, add one to the wins total and update the html.
+		if (userChoice === computerChoice) {
+			wins++;
+			updateWins();
+			alert("Right!");
+
+			// Update computer choice.
+			generateComputerChoice();
+			console.log('Computer choice: ' + computerChoice);
+
+			// Clear guesses so far.
+			userChoiceArray = [];
+			updateUserChoiceArray();
+
+			// Reset guesses left to 10.
+			guessesLeft = 10;
+			updateGuessesLeft();
 		}
 
-		if (userChoice != computerChoice){
-			losses++; // increment losses if they do not match
+		// Otherwise, the choices do not match, subtract one from guesses left, and update the html.
+		else {
+			guessesLeft--;
+			updateGuessesLeft();
+			alert("Wrong.");
+
+			// Add guess to user choice array.
+			userChoiceArray.push(userChoice);
+			updateUserChoiceArray();
+
+			// If there are no guesses left, add one to losses, update the html, update the computer choice, and reset guesses left.
+			if (guessesLeft === 0) {
+				losses++;
+				updateLosses();
+
+				// Display alert showing no guesses left.
+				alert("No guesses remaining! You lose :(");
+
+				// Update computer choice.
+				generateComputerChoice();
+				console.log('Computer choice: ' + computerChoice);
+
+				// Clear guesses so far.
+				userChoiceArray = [];
+				updateUserChoiceArray();
+
+				// Reset guesses left to 10.
+				guessesLeft = 10;
+				updateGuessesLeft();
+			}
 		}
+	}
 
-		// Add guess to user choice array.
-		userChoiceArray.push(userChoice);
-
-		guessesLeft--;
-		console.log(guessesLeft);
-
-		// Add the letter to guesses so far.
-		var guessesSoFar = "<p>Wins: " + wins + "</p>" +
-		"<p>Losses: " + losses + "</p>" +
-		"<p>Guesses Left: " + guessesLeft + "</p>" +
-		"<p>Your Guesses so far: " + userChoiceArray + "</p>";
-
-		document.querySelector('#game').innerHTML = guessesSoFar;
-
+	// If the user's keystroke is not in the letters array, display alert.
+	else {
+		alert("Invalid character. Please choose a letter.");
 	}
 }
-
-// Need to get it to stop and reset when guessesLeft gets to 0.
-// Only accept letters (no incorrect keystrokes from user).
-// When a win or loss occurs, restart the game (without refreshing the page).
-// Add a space after userChoiceArray elements in display.

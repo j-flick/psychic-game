@@ -1,0 +1,67 @@
+h1 {
+	font-family: 'Reenie Beanie', cursive;
+	font-size: 4.2rem;
+	text-shadow: 2px 2px #888;
+	border-bottom: 6px dashed #656565;
+	color: #AA8B39;
+	background-color: #28546c;
+	-webkit-text-stroke: 1px black;
+	color: white;
+	text-shadow:
+	3px 3px 0 #000,
+	-1px -1px 0 #000,  
+	1px -1px 0 #000,
+	-1px 1px 0 #000,
+	1px 1px 0 #000;
+}
+
+.container-fluid {
+	padding: 0;
+	max-width: 100%;
+}
+
+.row {
+	margin-right: 0px;
+}
+
+.col-12 {
+	padding-right: 0px;
+}
+
+.rounded {
+	border-radius: 1.25rem!important;
+}
+
+p {
+	font-family: 'Coda', cursive;
+	color: #e8e8e8;
+}
+
+/* STICKY FOOTER */
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+	background-color: #6F90A2;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	line-height: 60px; /* Vertically center the text there */
+	background-color: #f5f5f5;
+}
+
+.footer p {
+	text-align: center;
+	margin-bottom: 0px;
+	font-size: 20px;
+	font-family: 'Libre Barcode 128 Text', cursive;
+}

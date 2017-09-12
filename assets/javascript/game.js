@@ -87,7 +87,7 @@ document.onkeyup = function(event) {
 			// not -1 means the user's keystroke must be in the user choice array. Therefore,
 			// alert with a message to choose a different letter.
 			if (userChoiceArray.indexOf(userChoice) !== -1) {
-				alert(`You already tried "${userChoice}," please choose a different letter.`);
+				alert(`You already tried "${userChoice.toUpperCase()}." Please choose a different letter.`);
 			}
 
 			else {

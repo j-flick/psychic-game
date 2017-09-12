@@ -28,7 +28,7 @@ function updateGuessesLeft() {
 }
 
 function updateUserChoiceArray() {
-	document.querySelector("#guesses").innerHTML = "Your Guesses so far: " + userChoiceArray;
+	document.querySelector("#guesses").innerHTML = "Your Guesses so far: " + userChoiceArray.join(', ').toUpperCase(); // .join
 }
 
 function generateComputerChoice() {
@@ -82,33 +82,43 @@ document.onkeyup = function(event) {
 
 		// Otherwise, the choices do not match, subtract one from guesses left, and update the html.
 		else {
-			guessesLeft--;
-			updateGuessesLeft();
-			alert("Wrong.");
+			// Don't choose the same letter twice.
+			// Since -1 is returned if the value to search for in an array does not occur,
+			// not -1 means the user's keystroke must be in the user choice array. Therefore,
+			// alert with a message to choose a different letter.
+			if (userChoiceArray.indexOf(userChoice) !== -1) {
+				alert(`You already tried "${userChoice}," please choose a different letter.`);
+			}
 
-			// Add guess to user choice array.
-			userChoiceArray.push(userChoice);
-			updateUserChoiceArray();
+			else {
+				guessesLeft--;
+				updateGuessesLeft();
+				alert("Wrong.");
 
-			// If there are no guesses left, add one to losses, update the html, update the computer choice, and reset guesses left.
-			if (guessesLeft === 0) {
-				losses++;
-				updateLosses();
-
-				// Display alert showing no guesses left.
-				alert("No guesses remaining! You lose :(");
-
-				// Update computer choice.
-				generateComputerChoice();
-				console.log('Computer choice: ' + computerChoice);
-
-				// Clear guesses so far.
-				userChoiceArray = [];
+				// Add guess to user choice array.
+				userChoiceArray.push(userChoice);
 				updateUserChoiceArray();
 
-				// Reset guesses left to 10.
-				guessesLeft = 10;
-				updateGuessesLeft();
+				// If there are no guesses left, add one to losses, update the html, update the computer choice, and reset guesses left.
+				if (guessesLeft === 0) {
+					losses++;
+					updateLosses();
+
+					// Display alert showing no guesses left.
+					alert("No guesses remaining! You lose :(");
+
+					// Update computer choice.
+					generateComputerChoice();
+					console.log('Computer choice: ' + computerChoice);
+
+					// Clear guesses so far.
+					userChoiceArray = [];
+					updateUserChoiceArray();
+
+					// Reset guesses left to 10.
+					guessesLeft = 10;
+					updateGuessesLeft();
+				}
 			}
 		}
 	}

@@ -37,6 +37,17 @@ p {
 	color: #e8e8e8;
 }
 
+.c-ball-img {
+	margin-bottom: 15px;
+	height: 19.1rem;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#game {
+	padding-bottom: 10px;
+}
+
 /* STICKY FOOTER */
 
 html {
